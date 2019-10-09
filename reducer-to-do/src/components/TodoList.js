@@ -1,16 +1,17 @@
 import React from "react";
-import { initialState } from "../reducers/reducer";
-import NewTodo from "./NewTodo";
-import TodoForm from "./TodoForm";
+import Todo from "./Todo";
 
-const TodoList = ({ todos }) => {
+export default function TodoList(props) {
   return (
     <div>
-      {todos.map(item => {
-        return <NewTodo key={item.id} name={item.item} />;
-      })}
+      {props.todos.map(todo => (
+        <Todo
+          key={todo.id}
+          todo={todo}
+          toggleCompleted={props.toggleCompleted}
+          updateTodo={props.updateTodo}
+        />
+      ))}
     </div>
   );
-};
-
-export default TodoList;
+}

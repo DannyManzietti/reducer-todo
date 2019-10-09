@@ -1,39 +1,28 @@
-import React, { useState, useReducer } from "react";
+import React, { useState } from "react";
 
-const TodoForm = ({ addTodo }) => {
-  const [todoText, setTodoText] = useState("");
+export default function TodoForm(props) {
+  const [input, setInput] = useState("");
 
-  const changeHandler = event => {
-    setTodoText(event.target.value);
+  const handleChanges = event => {
+    setInput(event.target.value);
   };
 
   const handleSubmit = event => {
     event.preventDefault();
+    props.addTodo(input);
+    setInput("");
+  };
 
-    addTodo(todoText);
-
-    setTodoText("");
+  const clearCompleted = e => {
+    e.preventDefault();
+    props.clearCompleted();
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Enter To-do:
-          <input
-            type="text"
-            value={todoText}
-            name="newTodo"
-            onChange={changeHandler}
-          >
-            {}
-          </input>
-        </label>
-
-        <button type="submit">Add</button>
-      </form>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <input type="text" name="todo" value={input} onChange={handleChanges} />
+      <button type="submit">Add Todo!</button>
+      <button onClick={clearCompleted}>Clear Completed!</button>
+    </form>
   );
-};
-
-export default TodoForm;
+}
